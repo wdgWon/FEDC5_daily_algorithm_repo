@@ -1,27 +1,24 @@
 function solution(record) {
-    record = record.map(status => status.split(" "))
-    const hash = {}
-    const messages = [];
-    
-    // 최종적으로 변경된 uid의 name을 hash에 기록
-    for(const [transition, uid, name] of record) {
-        if(transition != "Leave") {
-            hash[uid] = name;
-        }
+    const userInfo = {};
+    const action = [];
+    const stateMapping = {
+        'Enter': '님이 들어왔습니다.',
+        'Leave': '님이 나갔습니다.'
     }
-    
-    // hash에 담긴 uid의 name을 메세지에 푸시
-    for(const [transition, uid] of record) {
-        switch(transition) {
-            case "Enter":
-                messages.push(`${hash[uid]}님이 들어왔습니다.`);
-                break;
-            case "Leave":
-                messages.push(`${hash[uid]}님이 나갔습니다.`);
-                break;
-            default:
-                break;
+
+    record.forEach((v) => {
+        const [state, id, nick] = v.split(' ');
+
+        if(state !== "Change") {
+            action.push([state, id]);
         }
-    }
-    return messages
+
+        if(nick) {
+            userInfo[id] = nick;
+        }
+    })
+
+    return action.map(([state, uid]) => {
+        return `${userInfo[uid]}${stateMapping[state]}`;    
+    })
 }
