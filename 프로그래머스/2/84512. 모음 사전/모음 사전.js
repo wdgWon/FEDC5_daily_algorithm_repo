@@ -7,6 +7,7 @@ function solution(word) {
         const newStr = str + alphabet;
         dictionary.set(newStr, count++);
         
+        // 문자가 5개면 dfs 종료
         if(newStr.length == 5) return;
         
         for(const vowel of vowels) {
