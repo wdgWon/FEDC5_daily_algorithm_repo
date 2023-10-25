@@ -1,5 +1,5 @@
 function solution(n, computers) {
-    let visited = [];
+    let visited = [];  // visited index가 computer 
     let answer = 0;
 
     function dfs(i) {
